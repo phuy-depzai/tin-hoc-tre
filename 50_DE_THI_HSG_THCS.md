@@ -15,6 +15,39 @@ Ví dụ:
 | CDIV. INP | CDIV.OUT |
 | --- | --- |
 | 6 12 5 6 4 7 10 | 6 |
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main(){
+    //freopen("CDIV.INP","r",stdin);
+    //freopen("CDIV.OUT","w",stdout);
+    ll n;
+    cin>>n;
+    vector<ll>v;
+    vector<ll>res;
+    ll a;
+    for(ll p=0;p<n;p++){cin>>a;v.push_back(a);}
+
+
+    for(ll i=0;i<v.size();i++){
+        for(ll x=0;x<v.size();x++){
+            if(v[i]!=v[x]){
+            ll result=gcd(v[i],v[x]);
+            res.push_back(result);}
+        }
+
+    }
+    ll max=res[0];
+        for(ll u =1;u<(int)res.size();u++){
+            if(max<res[u]){
+                max=res[u];
+            }
+        }
+        cout<<max;
+    return 0;
+}
+```
 
 brvt2223 - Bài 2: Đố vui tin học
 Để tổng kết phát thưởng cho cuộc thi Đố vui tin học. Ban tổ chức có N phần quà được đánh thứ tự từ 1 tới N, phần quà thứ i có giá trị là ai. Ban tổ chức yêu cầu học sinh chọn các phần quà theo quy tắc sau:
