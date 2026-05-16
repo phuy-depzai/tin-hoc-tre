@@ -3,6 +3,7 @@ THCS Bà Rịa – Vũng Tàu 2022-2023 brvt2223 - Bài 1: Tìm ước chung l�
 | CDIV. INP | CDIV.OUT |
 | --- | --- |
 | 6 12 5 6 4 7 10 | 6 |
+
 //chưa tối ưu
 ```cpp
 #include<bits/stdc++.h>
@@ -37,12 +38,39 @@ int main(){
     return 0;
 }
 ```
+//đã tối ưu thành công
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll cnt[1000005];
+int main(){
+ll n;cin>>n;
+ll max1=0;
+//vector<ll> a;
+for(int i =0;i<n;i++){
+    ll nhap;
+    cin>>nhap;
+    cnt[nhap]++;
+    if(nhap>max1){max1=nhap;}
+}
+//cout<<max1;
+for(int g=max1;g>=1;g--){
+    ll boi=0;
+    for(int i=g;i<=max1;i+=g){
+        boi+=cnt[i];
+    }
+    if(boi>=2){cout<<g;return 0;}
+}
+    return 0;
+}
+```
 brvt2223 - Bài 2: Đố vui tin học Để tổng kết phát thưởng cho cuộc thi Đố vui tin học. Ban tổ chức có N phần quà được đánh thứ tự từ 1 tới N, phần quà thứ i có giá trị là ai. Ban tổ chức yêu cầu học sinh chọn các phần quà theo quy tắc sau: Phần quà chọn sau phải có số thứ tự lớn hơn phần quà chọn trước đó. Phần quà chọn sau phải có giá trị lớn hơn phần quà chọn trước đó ít nhất K giá trị. Yêu cầu: Hãy giúp các bạn học sinh lựa chọn theo quy tắc ban tổ chức đặt ra sao cho số lượng phần quà được chọn là nhiều nhất. Dữ liệu: đọc vào từ File GIFT.INP: Dòng đầu chứa 2 số nguyên dương N và K cách nhau một ký tự trắng (N ≤ 104, K ≤ 105). N dòng tiếp theo, dòng thứ i chứa số nguyên dương ai (ai ≤ 106) là giá trị của phần quà thứ i. Kết quả: ghi ra file GIFT.OUT gồm một dòng duy nhất chứa số lượng phân quà nhiều nhất thỏa mãn yêu cầu. Ví dụ:
 
 
 | gift.inp | gift.out |
-| --- | --- |
 | 5 2 4 5 6 4 8| 3 |
+
 //chưa tối ưu
 ```cpp
 #include<bits/stdc++.h>
@@ -71,6 +99,7 @@ int main(){
     return 0;
 }
 ```
+
 brvt2223 - Bài 3: Trò chơi Nhân kỷ niệm ngày thành lập Đoàn, cô Tổng phụ trách tổ chức 1 trò chơi có thưởng cho các bạn lớp 9 như sau:
 Có N ô vuông được vẽ thẳng hàng trên sân trường, các ô vuông được đánh số từ 1, 2, ..., N. Mỗi ô vuông i (1 ≤ i ≤ N) có giá trị năng lượng là hi. Một bạn học sinh đang ở ô vuông thứ i, bạn ấy có thể nhảy tới ô vuông tiếp theo các cách:
 Nếu bạn ở ô vuông thứ i thì bạn có thể nhảy đến ô vuông thứ tự i +1, i+2, i+k. Chi phí năng lượng của bạn tiêu hao cho 1 lần nhảy là |hj – hi| với hj là ô vuông đích mà bạn nhảy tới. Bạn học sinh nào di chuyển từ ô số 1 đến ô số N với chi phí năng lượng thấp nhất sẽ được cô thưởng 1 phần quà. Yêu cầu: Hãy tìm chi phí thấp nhất để giúp các bạn học sinh nhảy từ ô vuông số 1 đến ô vuông thứ N.
