@@ -65,13 +65,34 @@ Ví dụ:
 
 | gift.inp | gift.out |
 | --- | --- |
-| 5 2 4 5 6 | 3 |
+| 5 2 4 5 6 4 8| 3 |
 
-
-
-| 4 8 |  |
-| --- | --- |
-
+//chưa tối ưu
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long;
+int main(){
+    ll res=0;
+    ll n,k,o;
+    cin>>n>>k;
+    vector<ll>v;
+    while(cin>>o){v.push_back(o);}
+    //solvel
+    ll last=0;
+    last=v[0];
+    res++;
+    for(int z=1;z<(int)v.size();z++){
+        ll ketqua=v[z]-last;
+        if(ketqua>=k){
+            res++;
+            last=v[z];
+        }
+    }
+    cout<<res;
+    return 0;
+}
+```
 brvt2223 - Bài 3: Trò chơi
 Nhân kỷ niệm ngày thành lập Đoàn, cô Tổng phụ trách tổ chức 1 trò chơi có thưởng cho các bạn lớp 9 như sau: Có N ô vuông được vẽ thẳng hàng trên sân trường, các ô vuông được đánh số từ 1, 2, ..., N. Mỗi ô vuông i (1 ≤ i ≤ N) có giá trị năng lượng là hi. Một bạn học sinh đang ở ô vuông thứ i, bạn ấy có thể nhảy tới ô vuông tiếp theo các cách:
 Nếu bạn ở ô vuông thứ i thì bạn có thể nhảy đến ô vuông thứ tự i +1, i+2,	i+k.
