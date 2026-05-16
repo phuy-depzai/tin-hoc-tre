@@ -15,6 +15,7 @@ Ví dụ:
 | CDIV. INP | CDIV.OUT |
 | --- | --- |
 | 6 12 5 6 4 7 10 | 6 |
+//chưa tối ưu
 ```cpp //chưa tối ưu
 #include<bits/stdc++.h>
 using namespace std;
