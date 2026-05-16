@@ -65,6 +65,23 @@ for(int g=max1;g>=1;g--){
     return 0;
 }
 ```
+//idea
+```
+## 🚀 Thuật toán Tối ưu Tìm GCD Lớn Nhất Của Cặp Số - O(M log M)
+
+### 💡 Ý tưởng cốt lõi (Core Idea)
+- Thay vì duyệt qua từng cặp số trong mảng (mất $O(N^2)$ và bị TLE), thuật toán chuyển hướng sang **tìm thẳng giá trị GCD** bằng cách duyệt ngược từ giá trị lớn nhất trong mảng (`max_val`) lùi về `1`.
+- Một số `g` chắc chắn là GCD của một cặp số nào đó nếu trong mảng **có ít nhất 2 số là bội của `g`**. Do duyệt từ lớn về bé, thằng `g` nào thỏa mãn đầu tiên sẽ là GCD lớn nhất $\rightarrow$ Kết thúc chương trình ngay lập tức.
+
+### 🛠️ Cách hoạt động từng bước (Step-by-step)
+1. **Mảng tần suất (`cnt`):** Dùng để đếm số lần xuất hiện của từng phần tử khi nhập dữ liệu.
+2. **Vòng lặp nhảy bước (`i += g`):** Với mỗi ứng viên `g`, thay vì duyệt qua cả mảng, ta chỉ "nhảy cóc" qua các vị trí bội số của nó trên trục số (`g, 2g, 3g,...`). 
+3. **Kiểm tra và thoát sớm:** Cộng dồn số lượng phần tử tại các vị trí bội này. Nếu tổng số lượng bội số $\ge 2$, in `g` và dừng chương trình.
+
+> **Độ phức tạp thời gian (Time Complexity):** $O(M \log M)$ với $M$ là giá trị lớn nhất trong mảng ($M \le 10^6$), dựa trên tính chất của Chuỗi điều hòa (Harmonic Series). Chạy siêu mượt trong vòng dưới `140ms`.
+```
+created by Gemini
+
 brvt2223 - Bài 2: Đố vui tin học Để tổng kết phát thưởng cho cuộc thi Đố vui tin học. Ban tổ chức có N phần quà được đánh thứ tự từ 1 tới N, phần quà thứ i có giá trị là ai. Ban tổ chức yêu cầu học sinh chọn các phần quà theo quy tắc sau: Phần quà chọn sau phải có số thứ tự lớn hơn phần quà chọn trước đó. Phần quà chọn sau phải có giá trị lớn hơn phần quà chọn trước đó ít nhất K giá trị. Yêu cầu: Hãy giúp các bạn học sinh lựa chọn theo quy tắc ban tổ chức đặt ra sao cho số lượng phần quà được chọn là nhiều nhất. Dữ liệu: đọc vào từ File GIFT.INP: Dòng đầu chứa 2 số nguyên dương N và K cách nhau một ký tự trắng (N ≤ 104, K ≤ 105). N dòng tiếp theo, dòng thứ i chứa số nguyên dương ai (ai ≤ 106) là giá trị của phần quà thứ i. Kết quả: ghi ra file GIFT.OUT gồm một dòng duy nhất chứa số lượng phân quà nhiều nhất thỏa mãn yêu cầu. Ví dụ:
 
 
