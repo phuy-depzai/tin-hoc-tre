@@ -89,6 +89,7 @@ brvt2223 - Bài 2: Đố vui tin học Để tổng kết phát thưởng cho cu
 | 5 2 4 5 6 4 8| 3 |
 
 //chưa tối ưu
+//code bị sai ý tưởng ,k sdụng greedy mà sdung dp
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -116,6 +117,65 @@ int main(){
     return 0;
 }
 ```
+//đã tối ưu
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll =long long;
+int main(){
+    ll n,k;cin>>n>>k;
+    vector<ll>a(n);
+    ll dp[n];
+    for (int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    fill(dp,dp+n,1);
+    ll max1=1;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<i;j++){
+            if(a[i]-a[j]>=k&&dp[j]+1>dp[i]){
+                dp[i]=dp[j]+1;
+            }
+        }
+        max1=max(max1,dp[i]);
+    }
+    cout<<max1;
+    return 0;
+}
+```
+//idea
+```
+## 📌 Ý tưởng thuật toán: Bài toán Nhặt Quà (LIS Biến Thể)
+
+### 1. Bản chất bài toán
+Bài toán này là một biến thể của bài LIS (Longest Increasing Subsequence - Dãy con tăng dài nhất). 
+Thay vì tìm dãy con tăng dần thông thường (a[i] > a[j]), chúng ta cần tìm dãy con thỏa mãn điều kiện khoảng cách giá trị giữa 2 phần tử liên tiếp được chọn phải lớn hơn hoặc bằng K:
+món sau - món trước >= K <=> a[i] - a[j] >= K
+
+### 2. Định nghĩa trạng thái Quy hoạch động
+* Sử dụng một mảng một chiều dp có kích thước bằng N.
+* dp[i]: Lưu trữ số lượng món quà tối đa nhặt được trong chuỗi hợp lệ, với điều kiện bắt buộc là phải chọn món quà thứ i làm món quà cuối cùng của chuỗi đó.
+
+### 3. Công thức truy hồi (Trọng tâm thuật toán)
+* Khởi tạo: Ban đầu, mỗi món quà khi đứng một mình luôn tạo thành một chuỗi có độ dài tối thiểu là 1. Do đó, ta gán toàn bộ dp[i] = 1 với mọi 0 <= i < N.
+* Vòng lặp kép để tìm kiếm:
+  * Gọi i là món quà hiện tại đang xét (chạy từ 0 đến N-1).
+  * Gọi j là một món quà bất kỳ đứng trước i (chạy từ 0 đến trước i).
+  * Nếu thỏa mãn đồng thời 2 điều kiện:
+    1. Hợp lệ về khoảng cách: a[i] >= a[j] + k (Đổi từ phép trừ thành phép cộng để tránh lỗi tràn số hoặc sai dấu với số âm).
+    2. Tối ưu hơn kỷ lục cũ: dp[j] + 1 > dp[i] (Chuỗi kết thúc tại j rồi nhảy sang i sẽ cho nhiều quà hơn kỷ lục hiện tại của i).
+  * Cập nhật trạng thái: dp[i] = dp[j] + 1
+
+### 4. Kết quả chung cuộc (Output)
+* Kết quả tối ưu của toàn bộ bài toán không nhất thiết phải kết thúc ở phần tử cuối cùng dp[n-1].
+* Do đó, ta cần tìm giá trị lớn nhất trong toàn bộ mảng dp sau khi vòng lặp kép chạy xong:
+Ans = max(dp[0], dp[1], ..., dp[N-1])
+
+### 5. Đánh giá độ phức tạp
+* Độ phức tạp thời gian (Time Complexity): O(N^2) do sử dụng 2 vòng lặp for lồng nhau để duyệt qua các cặp phần tử.
+* Độ phức tạp không gian (Space Complexity): O(N) để lưu trữ mảng Quy hoạch động dp.
+```
+created by Gemini
 
 brvt2223 - Bài 3: Trò chơi Nhân kỷ niệm ngày thành lập Đoàn, cô Tổng phụ trách tổ chức 1 trò chơi có thưởng cho các bạn lớp 9 như sau:
 Có N ô vuông được vẽ thẳng hàng trên sân trường, các ô vuông được đánh số từ 1, 2, ..., N. Mỗi ô vuông i (1 ≤ i ≤ N) có giá trị năng lượng là hi. Một bạn học sinh đang ở ô vuông thứ i, bạn ấy có thể nhảy tới ô vuông tiếp theo các cách:
@@ -127,6 +187,7 @@ Dữ liệu: đọc vào từ file GAME.INP gồm: Dòng đầu ghi 2 số N và
 | 5 3 10 25 35 40 20 | 20 |
 
 Giải thích: Cách nhảy của bạn học sinh sẽ là: 1  2 5, tổng chi phí sẽ là |25 - 10|+|20-25|=20. 
+// kco code chưa tối ưu tại kbiet giải:))))))))))))))))))(sdung greedy nhưng sai)
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -148,3 +209,36 @@ int main(){
 return 0;
 }
 ```
+//idea
+```
+## 📌 Ý tưởng thuật toán: Bài toán Trò chơi (Frog 2 - Quy hoạch động)
+
+### 1. Bản chất bài toán
+Bài toán này thuộc dạng **Quy hoạch động tiến trình (Sequence DP)**, cụ thể là bài toán tìm đường đi ngắn nhất trên đồ thị có hướng không chu trình (DAG). 
+Từ ô thứ `i`, học sinh có thể nhảy tối đa `K` bước về phía trước (tới các ô `i+1, i+2, ..., i+k`). Chi phí mỗi lần nhảy là độ chênh lệch tuyệt đối về năng lượng giữa ô đích và ô gốc: `|h[j] - h[i]|`. Mục tiêu là tìm tổng chi phí nhỏ nhất để đi từ ô `1` đến ô `N`.
+
+### 2. Định nghĩa trạng thái Quy hoạch động
+* Sử dụng một mảng một chiều `dp` gồm `N + 1` phần tử (để tính toán thuận tiện từ chỉ số `1` đến `N`).
+* **`dp[i]`**: Lưu trữ **chi phí năng lượng tối thiểu** để học sinh di chuyển từ ô vuông số `1` đến ô vuông thứ `i`.
+
+### 3. Công thức truy hồi & Cơ sở Quy hoạch động
+* **Cơ sở (Base case):** Khi học sinh đang đứng ở ô số `1`, chi phí năng lượng tích lũy ban đầu bằng `0`. Do đó:
+  `dp[1] = 0`
+* **Các ô còn lại:** Để tính toán cho các ô từ `2` đến `N`, ta khởi tạo `dp[i] = INF` (vô cùng lớn) nhằm mục đích tìm giá trị nhỏ nhất.
+* **Vòng lặp kép để tối ưu:**
+  * Gọi `i` là ô hiện tại cần tính chi phí tối ưu (chạy từ `2` đến `N`).
+  * Gọi `j` là ô xuất phát đứng trước `i` mà từ đó có thể nhảy một bước tới `i`. Vì khoảng cách tối đa là `K`, nên `j` sẽ nằm trong khoảng từ `max(1, i - K)` đến `i - 1`.
+  * **Công thức cập nhật:** Với mỗi ô `j` hợp lệ, ta thử nghiệm xem nếu đi từ `1` đến `j` rồi nhảy một bước từ `j` sang `i` thì có tiết kiệm năng lượng hơn cách đi tốt nhất hiện tại của `i` hay không:
+  `dp[i] = min(dp[i], dp[j] + abs(h[i] - h[j]))`
+
+### 4. Kết quả chung cuộc (Output)
+* Đáp án của bài toán chính là chi phí tối ưu tích lũy khi học sinh chạm đến ô cuối cùng `N`. Ta chỉ cần in ra giá trị của:
+  `dp[N]`
+
+### 5. Đánh giá độ phức tạp
+* **Độ phức tạp thời gian (Time Complexity):** $\mathcal{O}(N \times K)$. 
+  * Vòng lặp `i` chạy `N` lần. Với mỗi `i`, vòng lặp `j` chạy tối đa `K` lần.
+  * Với giới hạn dữ liệu $N \le 10^5$ và $K \le 100$, tổng số phép tính tối đa rơi vào khoảng $10^5 \times 100 = 10^7$ (10 triệu phép tính). Thuật toán này cực kỳ tối ưu, chạy hoàn toàn mượt mà trong vòng chưa tới `0.05 giây`, ăn trọn điểm tuyệt đối mà không lo bị quá thời gian (TLE).
+* **Độ phức tạp không gian (Space Complexity):** $\mathcal{O}(N)$ để lưu mảng lưu trữ chiều cao `h` và mảng Quy hoạch động `dp`.
+```
+created by Gemini
