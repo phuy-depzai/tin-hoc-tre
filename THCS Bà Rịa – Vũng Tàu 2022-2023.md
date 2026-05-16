@@ -81,3 +81,24 @@ Dữ liệu: đọc vào từ file GAME.INP gồm: Dòng đầu ghi 2 số N và
 | 5 3 10 25 35 40 20 | 20 |
 
 Giải thích: Cách nhảy của bạn học sinh sẽ là: 1  2 5, tổng chi phí sẽ là |25 - 10|+|20-25|=20. 
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long;
+const ll INF =1e12;
+int main(){
+    ll n,k,b;cin>>n>>k;
+    vector<ll>h(n+1);
+    for(int i = 1; i <= n; i++){
+    cin >> h[i];}
+    vector<ll>dp(n+1,INF);
+    dp[1]=0;
+    for(int i=2;i<=n;i++){
+        for(int j=max((ll)1, i - k);j<i;j++){
+            dp[i] = min(dp[i], dp[j] + abs(h[i] - h[j]));
+        }
+    }
+    cout<<dp[n];
+return 0;
+}
+```
