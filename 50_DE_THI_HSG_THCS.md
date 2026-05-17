@@ -16,41 +16,6 @@ Ví dụ:
 | --- | --- |
 | 6 12 5 6 4 7 10 | 6 |
 
-//chưa tối ưu
-```cpp //chưa tối ưu
-#include<bits/stdc++.h>
-using namespace std;
-#define ll long long
-int main(){
-    //freopen("CDIV.INP","r",stdin);
-    //freopen("CDIV.OUT","w",stdout);
-    ll n;
-    cin>>n;
-    vector<ll>v;
-    vector<ll>res;
-    ll a;
-    for(ll p=0;p<n;p++){cin>>a;v.push_back(a);}
-
-
-    for(ll i=0;i<v.size();i++){
-        for(ll x=0;x<v.size();x++){
-            if(v[i]!=v[x]){
-            ll result=gcd(v[i],v[x]);
-            res.push_back(result);}
-        }
-
-    }
-    ll max=res[0];
-        for(ll u =1;u<(int)res.size();u++){
-            if(max<res[u]){
-                max=res[u];
-            }
-        }
-        cout<<max;
-    return 0;
-}
-```
-
 brvt2223 - Bài 2: Đố vui tin học
 Để tổng kết phát thưởng cho cuộc thi Đố vui tin học. Ban tổ chức có N phần quà được đánh thứ tự từ 1 tới N, phần quà thứ i có giá trị là ai. Ban tổ chức yêu cầu học sinh chọn các phần quà theo quy tắc sau:
 Phần quà chọn sau phải có số thứ tự lớn hơn phần quà chọn trước đó.
@@ -67,32 +32,7 @@ Ví dụ:
 | --- | --- |
 | 5 2 4 5 6 4 8| 3 |
 
-//chưa tối ưu
-```cpp
-#include<bits/stdc++.h>
-using namespace std;
-using ll=long long;
-int main(){
-    ll res=0;
-    ll n,k,o;
-    cin>>n>>k;
-    vector<ll>v;
-    while(cin>>o){v.push_back(o);}
-    //solvel
-    ll last=0;
-    last=v[0];
-    res++;
-    for(int z=1;z<(int)v.size();z++){
-        ll ketqua=v[z]-last;
-        if(ketqua>=k){
-            res++;
-            last=v[z];
-        }
-    }
-    cout<<res;
-    return 0;
-}
-```
+
 brvt2223 - Bài 3: Trò chơi
 Nhân kỷ niệm ngày thành lập Đoàn, cô Tổng phụ trách tổ chức 1 trò chơi có thưởng cho các bạn lớp 9 như sau: Có N ô vuông được vẽ thẳng hàng trên sân trường, các ô vuông được đánh số từ 1, 2, ..., N. Mỗi ô vuông i (1 ≤ i ≤ N) có giá trị năng lượng là hi. Một bạn học sinh đang ở ô vuông thứ i, bạn ấy có thể nhảy tới ô vuông tiếp theo các cách:
 Nếu bạn ở ô vuông thứ i thì bạn có thể nhảy đến ô vuông thứ tự i +1, i+2,	i+k.
@@ -114,6 +54,8 @@ Ví dụ:
 
 Giải thích:
 Cách nhảy của bạn học sinh sẽ là: 1  2 5, tổng chi phí sẽ là |25 - 10|+|20-25|=20.
+
+
 THCS Bình Định 2021-2022
 bdinh2122 - Bài 1. Số có ba ước nguyên dương
 Bạn Hiền rất yêu thích toán học, đặc biệt là Số học. Một ngày nọ, trong lúc giải một bài toán số học, Hiền muốn đếm những số tự nhiên có đúng ba ước số nguyên dương trong một phạm vi nhất định. Hãy lập trình giúp bạn Hiền đếm xem có bao nhiêu số có đúng ba ước số nguyên dương khác nhau có giá trị không lớn hơn số nguyên N cho trước.
