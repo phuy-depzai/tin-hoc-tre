@@ -99,6 +99,73 @@ Ví dụ:
 | --- | --- |
 | 7 11 8 23 2 45 7 34 38 | 0110010 |
 
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <fstream>
+
+using namespace std;
+
+int n, n1;
+long long M;
+vector<long long> a;
+vector<pair<long long, string>> half1; // Lưu: {tổng, chuỗi_bit}
+string ans = "";
+bool found = false;
+
+// Quay lui nửa đầu (từ số 0 đến n1-1)
+void backtrack1(int idx, long long cur_sum, string cur_bits) {
+    if (idx == n1) {
+        half1.push_back({cur_sum, cur_bits});
+        return;
+    }
+    backtrack1(idx + 1, cur_sum, cur_bits + "0");
+    backtrack1(idx + 1, cur_sum + a[idx], cur_bits + "1");
+}
+
+// Quay lui nửa sau (từ số n1 đến n-1)
+void backtrack2(int idx, long long cur_sum, string cur_bits) {
+    if (found) return;
+    if (idx == n) {
+        long long target = M - cur_sum;
+        // Tìm kiếm nhị phân mảnh ghép còn thiếu
+        auto it = lower_bound(half1.begin(), half1.end(), make_pair(target, string("")));
+        if (it != half1.end() && it->first == target) {
+            ans = it->second + cur_bits;
+            found = true;
+        }
+        return;
+    }
+    backtrack2(idx + 1, cur_sum, cur_bits + "0");
+    if (cur_sum + a[idx] <= M) {
+        backtrack2(idx + 1, cur_sum + a[idx], cur_bits + "1");
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+    ifstream fin("CHONSO.INP"); ofstream fout("CHONSO.OUT");
+    
+    fin >> n; a.resize(n);
+    for (int i = 0; i < n; i++) fin >> a[i];
+    fin >> M;
+
+    n1 = n / 2;
+    backtrack1(0, 0, "");
+    
+    // C++ tự xếp tăng dần theo tổng (it->first) mà không cần viết hàm so sánh riêng
+    sort(half1.begin(), half1.end()); 
+
+    backtrack2(n1, 0, "");
+
+    fout << ans;
+    fin.close(); fout.close();
+    return 0;
+}
+```
+
 bdinh2122 - Bài 4: Rừng nguy hiểm
 Một con hổ bị lạc trong một khu rừng nguy hiểm hình vuông, kích thước N x N, mỗi địa hình được mã hoá bởi các số 0 hoặc 1. Mỗi lần di chuyển con hổ có thể đi một bước theo hướng Đông (Đ), Tây (T), Nam (N), Bắc (B) (hay nói cách khác là một ô chung cạnh) với kiện nó đi sang một ô có cùng tính chất địa hình (giá trị) với ô nó đang đứng. Bạn hãy xem liệu con hổ có thể thoát khỏi khu rừng nguy hiểm này không, nếu có thì mất ít nhất là bao nhiêu bước dịch chuyển con hổ có thể thoát nguy được?
 Dữ liệu vào: File RUNG.INP gồm:
