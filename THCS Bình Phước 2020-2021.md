@@ -5,7 +5,7 @@ Dữ liệu vào: lấy từ file tongchuso.inp duy nhất một số nguyên N
 Kết quả: ghi ra file tongchuso.out duy nhất một số nguyên là tổng các chữ số của N
 Ví dụ:
 
-
+ 
 | tongchuso.inp | tongchuso.out |
 | --- | --- |
 | 24 | 6 |
